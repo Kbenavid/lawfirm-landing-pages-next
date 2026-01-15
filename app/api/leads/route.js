@@ -1,10 +1,7 @@
 import { dbConnect } from "@/lib/dbConnect";
 import Lead from "@/lib/models/Lead";
 export async function GET() {
-  return Response.json(
-    { message: "Leads API GET is working" },
-    { status: 200 }
-  );
+  return Response.json({ message: "Leads API GET is working" }, { status: 200 });
 }
 
 export async function POST(request) {
@@ -63,10 +60,13 @@ export async function POST(request) {
 
     return Response.json({ lead: newLead }, { status: 201 });
   } catch (err) {
-    console.error("POST /api/leads error:", err);
-
+    console.error("API /api/leads error:", err);
+  
     return Response.json(
-      { error: "Something went wrong" },
+      {
+        error: "Something went wrong",
+        details: err?.message || String(err),
+      },
       { status: 500 }
     );
   }
