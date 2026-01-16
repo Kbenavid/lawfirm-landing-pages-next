@@ -41,8 +41,10 @@ export async function POST(request) {
       message: String(message),
     });
 
-    try {
-      await fetch(process.env.GOOGLE_SHEETS_WEBHOOK_URL, {
+    // Fire-and-forget: don't block the response on the Google Sheets webhook.
+    const webhookUrl = process.env.GOOGLE_SHEETS_WEBHOOK_URL;
+    if (webhookUrl) {
+      fetch(webhookUrl, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -53,9 +55,9 @@ export async function POST(request) {
           message: newLead.message,
           source: "website",
         }),
+      }).catch((sheetErr) => {
+        console.error("Google Sheets webhook failed:", sheetErr);
       });
-    } catch (sheetErr) {
-      console.error("Google Sheets webhook failed:", sheetErr);
     }
 
     return Response.json({ lead: newLead }, { status: 201 });
