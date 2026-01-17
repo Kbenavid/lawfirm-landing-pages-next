@@ -82,9 +82,10 @@ export default function Hero() {
               <Image
                 src="/Jose-Orozco.jpg"
                 alt="Attorney Jose Orozco"
-                width={400}
-                height={500}
-                className="h-full w-full object-contain brightness-110 contrast-105"
+                fill
+                sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                className="object-cover object-top"
+                priority
               />
               {/* Subtle overlay to blend the photo into the light page */}
               <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-white/20 via-transparent to-transparent" />

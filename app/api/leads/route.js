@@ -41,6 +41,15 @@ export async function POST(request) {
       message: String(message),
     });
 
+    // Derive the page URL the form was submitted from (best-effort)
+    let finalSourceUrl = "";
+    try {
+      const referer = request.headers.get("referer") || "";
+      if (referer) finalSourceUrl = referer;
+    } catch (e) {
+      // ignore
+    }
+
     const webhookUrl = process.env.GOOGLE_SHEETS_WEBHOOK_URL;
 
     if (webhookUrl) {
@@ -56,7 +65,7 @@ export async function POST(request) {
             email: newLead.email,
             phone: newLead.phone,
             message: newLead.message,
-            source: "website",
+            source: finalSourceUrl || "website",
           }),
         });
 
