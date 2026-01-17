@@ -41,23 +41,40 @@ export async function POST(request) {
       message: String(message),
     });
 
-    // Fire-and-forget: don't block the response on the Google Sheets webhook.
     const webhookUrl = process.env.GOOGLE_SHEETS_WEBHOOK_URL;
+
     if (webhookUrl) {
-      fetch(webhookUrl, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          createdAt: newLead.createdAt?.toISOString?.() || new Date().toISOString(),
-          name: newLead.name,
-          email: newLead.email,
-          phone: newLead.phone,
-          message: newLead.message,
-          source: "website",
-        }),
-      }).catch((sheetErr) => {
+      try {
+        const sheetRes = await fetch(webhookUrl, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            createdAt:
+              newLead.createdAt?.toISOString?.() ||
+              new Date().toISOString(),
+            name: newLead.name,
+            email: newLead.email,
+            phone: newLead.phone,
+            message: newLead.message,
+            source: "website",
+          }),
+        });
+
+        if (!sheetRes.ok) {
+          const text = await sheetRes.text().catch(() => "");
+          console.error(
+            "Google Sheets webhook returned non-200:",
+            sheetRes.status,
+            text
+          );
+        }
+      } catch (sheetErr) {
         console.error("Google Sheets webhook failed:", sheetErr);
-      });
+      }
+    } else {
+      console.warn(
+        "GOOGLE_SHEETS_WEBHOOK_URL is not set in the environment"
+      );
     }
 
     return Response.json({ lead: newLead }, { status: 201 });
