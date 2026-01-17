@@ -68,9 +68,6 @@ export default function Hero() {
                   <li>Truck accidents</li>
                   <li>Premises liability</li>
                   <li>Slip and fall</li>
-                  <li>Workers’ compensation</li>
-                  <li>Medical malpractice</li>
-                  <li>Product liability</li>
                   <li>Other accidents</li>
                 </ul>
               </li>
