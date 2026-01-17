@@ -27,9 +27,6 @@ export default function SiteFooter() {
                 >
                   (619) 736-1268
                 </a>
-                <p className="mt-2 text-xs text-brand-gray">
-                  Available 24/7 for a free consultation.
-                </p>
               </div>
             </div>
 
