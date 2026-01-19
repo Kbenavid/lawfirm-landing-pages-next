@@ -1,22 +1,14 @@
+"use client";
+
+import { useLanguage } from "@/components/LanguageProvider";
 import Hero from "@/components/Hero";
 import ReviewsCarousel from "@/components/ReviewsCarousel";
 import FAQ from "@/components/FAQ";
 import OfficePhotoSection from "@/components/OfficePhotoSection";
 import SiteFooter from "@/components/SiteFooter";
-import { MESSAGES } from "@/lib/i18n";
 
-export const metadata = {
-  alternates: {
-    canonical: "/",
-    languages: {
-      en: "/",
-      es: "/es",
-    },
-  },
-};
-
-export default function HomePage() {
-  const t = MESSAGES.en;
+export default function HomeClient() {
+  const { t } = useLanguage();
 
   return (
     <main

@@ -1,13 +1,14 @@
+import { MESSAGES } from "@/lib/i18n";
+
 import Hero from "@/components/Hero";
 import ReviewsCarousel from "@/components/ReviewsCarousel";
 import FAQ from "@/components/FAQ";
 import OfficePhotoSection from "@/components/OfficePhotoSection";
 import SiteFooter from "@/components/SiteFooter";
-import { MESSAGES } from "@/lib/i18n";
 
 export const metadata = {
   alternates: {
-    canonical: "/",
+    canonical: "/es",
     languages: {
       en: "/",
       es: "/es",
@@ -15,8 +16,8 @@ export const metadata = {
   },
 };
 
-export default function HomePage() {
-  const t = MESSAGES.en;
+export default function Page() {
+  const t = MESSAGES.es;
 
   return (
     <main

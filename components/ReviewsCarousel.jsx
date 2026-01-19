@@ -20,9 +20,20 @@ const REVIEWS = [
   },
 ];
 
-export default function ReviewsCarousel() {
+export default function ReviewsCarousel({ t }) {
   const [index, setIndex] = useState(0);
   const [isFading, setIsFading] = useState(false);
+
+  const copy = {
+    heading: t?.reviewsCarousel?.heading ?? "Real Clients. Real Relief.",
+    subheading:
+      t?.reviewsCarousel?.subheading ??
+      "Here's what people say about working with Orozco Law Firm.",
+    dotAriaLabel:
+      t?.reviewsCarousel?.dotAriaLabel ?? "Go to review",
+    privacyNote:
+      t?.reviewsCarousel?.privacyNote ?? "Client names abbreviated for privacy.",
+  };
 
   function goTo(newIndex) {
     if (isFading) return; // prevents skipping multiple cards fast
@@ -55,11 +66,9 @@ export default function ReviewsCarousel() {
     <section className="mx-auto w-full max-w-screen-2xl px-6 py-14">
       <div className="mx-auto max-w-3xl text-center">
         <h2 className="text-3xl font-bold tracking-tight text-brand-purple">
-          Real Clients. Real Relief.
+          {copy.heading}
         </h2>
-        <p className="mt-3 text-brand-gray">
-          Here&apos;s what people say about working with Orozco Law Firm.
-        </p>
+        <p className="mt-3 text-brand-gray">{copy.subheading}</p>
       </div>
 
       <div className="mt-10 flex justify-center">
@@ -84,7 +93,7 @@ export default function ReviewsCarousel() {
             key={i}
             type="button"
             onClick={() => goTo(i)}
-            aria-label={`Go to review ${i + 1}`}
+            aria-label={`${copy.dotAriaLabel} ${i + 1}`}
             className={`h-2.5 w-2.5 rounded-full transition ${
               i === index
                 ? "bg-brand-purple"
@@ -94,8 +103,8 @@ export default function ReviewsCarousel() {
         ))}
       </div>
       <p className="mt-3 text-center text-xs text-brand-gray/70">
-        Client names abbreviated for privacy.
+        {copy.privacyNote}
       </p>
     </section>
   );
-} 
+}
